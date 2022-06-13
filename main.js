@@ -14,7 +14,8 @@ var defaults = {
 };
 
 defaults.highlight = function (str, lang) {
-    var esc = md.utils.escapeHtml;
+    var esc = md.utils.escapeRE(md.utils.escapeHtml(str));
+    
     if (lang && hljs.getLanguage(lang)) {
         try {
             return '<pre class="hljs"><code>' + hljs.highlight(str, { language: lang, ignoreIllegals: true }).value + '</code></pre>';
@@ -23,7 +24,7 @@ defaults.highlight = function (str, lang) {
             console.log(err);
         }
     } else {
-        return '<pre class="hljs"><code>' + esc(str) + '</code></pre>';
+        return '<pre class="hljs"><code>' + esc + '</code></pre>';
     }
 };
 
