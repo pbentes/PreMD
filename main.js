@@ -14,7 +14,7 @@ var defaults = {
 };
 
 defaults.highlight = function (str, lang) {
-    var esc = md.utils.escapeRE(md.utils.escapeHtml(str));
+    var esc = md.utils.escapeHtml(str);
     
     if (lang && hljs.getLanguage(lang)) {
         try {
@@ -37,7 +37,7 @@ fs.readFile(process.argv[2], 'utf8', function (err, data) {
 
     let result = md.render(data);
 
-    fs.writeFile(process.argv[3], result.replace("{", '{"{"}').replace("}", '{"}"}'), 'utf8', (err) => {
+    fs.writeFile(process.argv[3], result.replaceAll("{", "&#123;").replaceAll("}", "&#125;"), 'utf8', (err) => {
         if (err) {
             return console.log(err);
         }
